@@ -10,6 +10,12 @@ A standalone, connection-based ComfyUI node to clear **current images and/or pro
 
 An independent ComfyUI extension, not an official ComfyUI product.
 
+## Preview
+
+![Illustrative Clean Slate controller preview](assets/clean-slate-preview.png)
+
+*Illustration of the controller's connections and five buttons; not a live ComfyUI screenshot.*
+
 ## Features
 
 - Provides a separate **Clean Slate Controller** node under **RebelTortuga / Utilities**. It does not add buttons to any existing node.
