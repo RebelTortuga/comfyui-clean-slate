@@ -50,9 +50,16 @@ ComfyUI extensions and image nodes have different preview implementations. This 
 
 **Testing:** The standalone controller was previously tested in ComfyUI 0.42.1. The active-tab stale-preview watcher passed isolated JavaScript tests but requires a fresh live ComfyUI test. Compatibility with all third-party image-preview implementations is not established. Back up your workflow JSON before first use.
 
-## GitHub publishing
+## 🔗 Related Free RebelTortuga Projects
 
-Suggested repository name: `comfyui-clean-slate`. Put this repository's files in the root of your GitHub repository, not nested under another folder. Attach the release ZIP for easy downloads.
+Explore other free tools and workflows:
+
+- [comfyui-free-local-qwen-image-edit](https://github.com/RebelTortuga/comfyui-free-local-qwen-image-edit)
+- [comfyui-free-local-sdxl-inpainting](https://github.com/RebelTortuga/comfyui-free-local-sdxl-inpainting)
+- [comfyui-free-local-wan-video-quality](https://github.com/RebelTortuga/comfyui-free-local-wan-video-quality)
+- [comfyui-free-local-wan-video-high-resolution](https://github.com/RebelTortuga/comfyui-free-local-wan-video-high-resolution)
+
+[Browse all RebelTortuga projects](https://github.com/RebelTortuga)
 
 ## 🐢 Support RebelTortuga
 
