@@ -50,6 +50,18 @@ ComfyUI extensions and image nodes have different preview implementations. This 
 
 **Testing:** The standalone controller was previously tested in ComfyUI 0.42.1. The active-tab stale-preview watcher passed isolated JavaScript tests but requires a fresh live ComfyUI test. Compatibility with all third-party image-preview implementations is not established. Back up your workflow JSON before first use.
 
+## Frequently asked questions and troubleshooting
+
+**Where is the controller after installation?** Restart ComfyUI, hard-refresh the browser (`Ctrl+Shift+R`), then search for **Clean Slate Controller** under **RebelTortuga / Utilities**.
+
+**Why didn't a particular image or prompt clear?** The controller only operates on connected source nodes on the active canvas. Check the extra IMAGE/STRING connections. Some third-party preview widgets may require compatibility work.
+
+**Did clearing delete my image files?** No. It clears current selections and known cached previews, not saved images, prompt-history files, or the image library.
+
+**Why can't I run generation immediately after clearing?** An image-loader field may now be empty. Select or upload a new image first.
+
+**Why do cleared values return after restarting ComfyUI?** Save the workflow after clearing if you want the empty state persisted. Back up your workflow JSON before first use.
+
 ## 🔗 Related Free RebelTortuga Projects
 
 Explore other free tools and workflows:
