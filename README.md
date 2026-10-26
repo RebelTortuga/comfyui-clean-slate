@@ -54,6 +54,18 @@ ComfyUI extensions and image nodes have different preview implementations. This 
 
 Suggested repository name: `comfyui-clean-slate`. Put this repository's files in the root of your GitHub repository, not nested under another folder. Attach the release ZIP for easy downloads.
 
+## 🐢 Support RebelTortuga
+
+Clean Slate is completely free to use. No payment or donation is required!
+
+If this node has helped you, consider supporting its development.
+
+☕ **[Help this turtle get a new shell!](https://ko-fi.com/rebeltortuga)** 🐢💚
+
+Your support helps me continue improving Clean Slate, developing new ComfyUI tools, and sharing free projects with the community.
+
+**No pressure. No paywalls. Just one rebellious turtle with big ideas!**
+
 ## License
 
 MIT; see [LICENSE](LICENSE).
