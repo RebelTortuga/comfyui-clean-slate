@@ -88,3 +88,16 @@ Your support helps me continue improving Clean Slate, developing new ComfyUI too
 ## License
 
 MIT; see [LICENSE](LICENSE).
+
+---
+
+<!-- BEGIN REBELTORTUGA SAFETY -->
+## Privacy & Software Safety
+
+Read the [project safety guidance](SAFETY.md) before use. It covers local workflows, dependencies, saved files, and security warnings. See [SECURITY.md](SECURITY.md) for vulnerability reporting and the [license](LICENSE) for terms.
+
+[Privacy & Software Safety](https://rebeltortuga.github.io/privacy-software-safety.html) · [Project Licenses](https://rebeltortuga.github.io/project-licenses.html)
+
+Do not upload passwords, access tokens, browser profiles, private backups, or unredacted diagnostic reports to public issues.
+<!-- END REBELTORTUGA SAFETY -->
+
