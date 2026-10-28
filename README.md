@@ -101,3 +101,7 @@ Read the [project safety guidance](SAFETY.md) before use. It covers local workfl
 Do not upload passwords, access tokens, browser profiles, private backups, or unredacted diagnostic reports to public issues.
 <!-- END REBELTORTUGA SAFETY -->
 
+## Connect with RebelTortuga
+
+- [YouTube](https://www.youtube.com/@RebelTortuga)
+- [Twitch](https://www.twitch.tv/rebeltortuga)
