@@ -111,3 +111,7 @@ Do not upload passwords, access tokens, browser profiles, private backups, or un
 - [Patreon](https://www.patreon.com/RebelTortuga)
 - [Ko-fi](https://ko-fi.com/rebeltortuga)
 <!-- rebeltortuga-official-links:end -->
+
+## Official Project Guide
+
+[View the comfyui-clean-slate project guide](https://rebeltortuga.github.io/projects/comfyui-clean-slate.html)
