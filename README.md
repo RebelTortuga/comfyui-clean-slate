@@ -15,9 +15,11 @@ Clear connected images and prompts while keeping workflow connections, saved fil
 
 ## Preview
 
-![Clean Slate illustrative preview](assets/clean-slate-preview.webp)
+![Clean Slate controller presentation preview](assets/clean-slate-controller.webp)
 
-*Illustrative preview; the screenshots below show the actual ComfyUI interface.*
+![Clean Slate connected presentation preview](assets/clean-slate-connected.webp)
+
+*Screenshot-based promotional previews. Original screenshots below remain the interface reference.*
 
 ![Actual Clean Slate controller](assets/clean-slate-screenshot.webp)
 
