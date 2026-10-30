@@ -9,67 +9,68 @@
 
 # ComfyUI Clean Slate
 
-A standalone, connection-based ComfyUI node to clear **current images and/or prompts** without deleting your image library or saved prompt history.
+Clear connected images and prompts while keeping workflow connections, saved files and prompt history intact.
 
-**Developer:** RebelTortuga  
-**Release:** v0.1.0  
-**Platform:** Windows 10/11, ComfyUI (including Stability Matrix)  
-**License:** MIT  
-**Price:** Free; no payment required
-
-An independent ComfyUI extension, not an official ComfyUI product.
+**Release: v0.2.0** · **License: MIT** · **Free local extension**
 
 ## Preview
 
-![Illustrative Clean Slate controller preview](assets/clean-slate-preview.png)
+![Clean Slate illustrative preview](assets/clean-slate-preview.webp)
 
-*Illustration of the controller's connections and five buttons; not a live ComfyUI screenshot.*
+*Illustrative preview; the screenshots below show the actual ComfyUI interface.*
 
-## Features
+![Actual Clean Slate controller](assets/clean-slate-screenshot.webp)
 
-- Provides a separate **Clean Slate Controller** node under **RebelTortuga / Utilities**. It does not add buttons to any existing node.
-- Connect up to eight image outputs, four mask outputs, and positive/negative STRING prompt outputs to identify exactly which sources it controls.
-- Five individual controls: **Clear Connected Images**, **Clear Positive (+)**, **Clear Negative (−)**, **Clear Both Prompts**, and **Clear Images + Both Prompts**.
-- Confirms before making changes.
-- Clears image-selection fields and cached previews in connected source-image nodes, alongside positive/negative fields of connected Prompt History nodes. Also guards against a previously cached preview reappearing when a workflow tab reloads.
-- Keeps node positions, all connections, models, sampler settings, and non-prompt controls intact.
-- **Never deletes or archives files.** Existing images, dropdown history, and prompt-history files stay untouched.
-- Does not automatically save the reset workflow; save manually if desired.
+![Actual connected image and paired prompt example](assets/clean-slate-connections.webp)
 
-## Installation
+## Five actions, in order
 
-1. Stop ComfyUI in Stability Matrix.
-2. Extract the `comfyui-clean-slate` directory into your ComfyUI installation's `custom_nodes` directory:
+| Button | What it clears |
+| --- | --- |
+| Reload All Connections | Connected image selections, mask/latent branch previews and both prompts |
+| Reload All Connected Images | Connected image selections and image/mask/latent branch previews |
+| Reload Both Prompts (+ / -) | Both connected active prompt fields |
+| Reload + Prompt | Connected positive prompt fields only |
+| Reload - Prompt | Connected negative prompt fields only |
 
-   `ComfyUI/custom_nodes/comfyui-clean-slate/`
+“Reload” is the button label. Actions clear selected content and refresh the display; they do not recreate nodes, reconfigure nodes, disconnect wires, execute generation or restart ComfyUI. Every action asks for confirmation first. Cancel or Esc leaves content unchanged; the final OK message reports completion.
 
-3. Restart ComfyUI and refresh the browser with **Ctrl+Shift+R**.
-4. Right-click the canvas, search **Clean Slate Controller**, and add it near your source images and prompt-history node.
-5. Connect each **Load Image → IMAGE** output to a controller `image_1` through `image_8` input. These are **additional branches**; existing connections stay connected.
-6. Connect **Prompt History → positive** to controller `positive`, and **Prompt History → negative** to controller `negative`.
-7. Click one of the five controller buttons and confirm. Only linked source nodes are affected.
+## Connections
 
-No extra Python dependencies, credentials, or paid services are required.
+| Input | Count | Connect from |
+| --- | --- | --- |
+| image_1–image_5 | 5 | IMAGE outputs of image sources or preview branches |
+| mask_1–mask_5 | 5 | MASK outputs |
+| positive / negative | 2 | Matching STRING outputs or separate text-encoder CONDITIONING outputs |
+| latent / latent_2 | 2 | LATENT outputs, such as KSampler |
+| control | 1 | Optional control-node output; the controller does not reset its settings |
 
-## Important behavior and limitations
+These are additional branches: leave the workflow's existing wires connected. Connecting a latent or processed-image output clears conventional previews on that branch; it does not delete latent tensors. Clearing a processed mask does not erase mask files. A directly connected Load Image source has its current selection cleared.
 
-The image-selection value is set to an empty string. That state is not a valid source for image generation: select/upload a new image before running. ComfyUI may restore an old thumbnail in `node.imgs` while switching tabs even when the selected filename remains blank. Clean Slate checks the active canvas every 250 ms and removes such stale previews; it skips images with a selected filename. Save with **Ctrl+S** to persist changed widget values.
+Supports paired `positive`/`negative` fields, standard `text`/`prompt` fields, `text_g`/`text_l`/`text_t5`, and linked text sources/reroutes. Arbitrary third-party field names or conditioning-processing chains may require adapters.
 
-ComfyUI extensions and image nodes have different preview implementations. This release clears conventional LiteGraph `node.imgs` previews and known image-loader widgets, but some third-party nodes may store images in private caches or draw separate preview elements. Those require compatibility testing and possibly a node-specific adapter. The controller affects **only connected sources** on the active canvas, not every node automatically.
+## Install or update
 
-**Testing:** The standalone controller was previously tested in ComfyUI 0.42.1. The active-tab stale-preview watcher passed isolated JavaScript tests but requires a fresh live ComfyUI test. Compatibility with all third-party image-preview implementations is not established. Back up your workflow JSON before first use.
+1. Stop ComfyUI. Download the release ZIP and extract `comfyui-clean-slate` into `ComfyUI/custom_nodes/`. Replace the existing files; do not install a second copy.
+2. Restart ComfyUI and hard-refresh its browser with Ctrl+F5.
+3. Add **Clean Slate Controller** under **RebelTortuga / Utilities**. When updating an old workflow with obsolete sockets, add a fresh controller and reconnect it before removing the old one.
+4. Load `examples/ComfyUI-Clean-Slate.json` for a blank image/paired-prompt wiring example. That example also requires [PromptHistory](https://github.com/dawncreatescode/comfyui-PromptHistory). The extension itself has no extra Python dependencies.
 
-## Frequently asked questions and troubleshooting
+## Cleared previews and saved size
 
-**Where is the controller after installation?** Restart ComfyUI, hard-refresh the browser (`Ctrl+Shift+R`), then search for **Clean Slate Controller** under **RebelTortuga / Utilities**.
+Cleared conventional image previews stay blank across workflow-tab reconstruction. New execution releases the preview-clear markers so fresh results can appear. Select a new source image before running after clearing. Save the workflow to retain blank values across reopening.
 
-**Why didn't a particular image or prompt clear?** The controller only operates on connected source nodes on the active canvas. Check the extra IMAGE/STRING connections. Some third-party preview widgets may require compatibility work.
+The buttons sit above the sockets. Resize the controller as desired and save: tab restoration preserves its saved width and height.
 
-**Did clearing delete my image files?** No. It clears current selections and known cached previews, not saved images, prompt-history files, or the image library.
+## Fixed image-edit mode node
 
-**Why can't I run generation immediately after clearing?** An image-loader field may now be empty. Select or upload a new image first.
+This release also includes **Image Edit Mode (1 Auto / 2 Painted Mask)** (`CleanSlateImageMode`). It has exactly two IMAGE inputs and one IMAGE output: mode 1 selects the automatic result; mode 2 selects the painted-mask composite. Inputs do not grow dynamically. This is used by the [Qwen image-edit workflow](https://github.com/RebelTortuga/comfyui-free-local-qwen-image-edit).
 
-**Why do cleared values return after restarting ComfyUI?** Save the workflow after clearing if you want the empty state persisted. Back up your workflow JSON before first use.
+## Validation and limits
+
+The author confirmed generation, clearing, Cancel and saved-size behavior in their ComfyUI setup. Isolated tests also cover prompt polarity, tab-restored caches, cancellation, size preservation and image-mode branch selection. A clean-machine GPU installation was not tested. Targets the classic canvas renderer; third-party preview caches and Nodes 2.0 require separate compatibility checks.
+
+No saved image files or history files are deleted. Histories stay on each user's machine; no personal images or active prompts are bundled. This is an independent community extension, not an official ComfyUI product.
 
 ## 🔗 Related Free RebelTortuga Projects
 
@@ -124,3 +125,4 @@ Do not upload passwords, access tokens, browser profiles, private backups, or un
 ## Official Project Guide
 
 [View the comfyui-clean-slate project guide](https://rebeltortuga.github.io/projects/comfyui-clean-slate.html)
+

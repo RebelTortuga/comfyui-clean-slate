@@ -1,0 +1,48 @@
+name: Publish verified release
+on:
+  push:
+    branches: [main]
+    paths: [release.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build release archive
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $release = Get-Content -Raw release.json | ConvertFrom-Json
+          $archive = Join-Path $env:RUNNER_TEMP $release.asset_name
+          python -c "from pathlib import Path; import zipfile,sys; root=Path.cwd(); output=Path(sys.argv[1]); prefix=sys.argv[2]; z=zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED); [z.write(p, str(Path(prefix)/p.relative_to(root))) for p in root.rglob('*') if p.is_file() and '.git' not in p.relative_to(root).parts and '__pycache__' not in p.parts]; z.close()" $archive $env:GITHUB_REPOSITORY.Split('/')[1]
+          if ($LASTEXITCODE -ne 0) { throw 'Archive creation failed.' }
+          "RELEASE_ARCHIVE=$archive" >> $env:GITHUB_ENV
+      - name: Create draft, attach ZIP, publish and verify
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $release = Get-Content -Raw release.json | ConvertFrom-Json
+          $existing = gh release view $release.tag --json isDraft,targetCommitish 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            $state = $existing | ConvertFrom-Json
+            if (!$state.isDraft) { throw 'This version is already published. Choose a new release version instead of overwriting it.' }
+            if ($state.targetCommitish -ne $env:GITHUB_SHA) { throw 'Existing draft targets another commit; review it before retrying.' }
+          } else {
+            gh release create $release.tag --target $env:GITHUB_SHA --title $release.name --notes-file RELEASE_NOTES.md --draft
+            if ($LASTEXITCODE -ne 0) { throw 'Draft release creation failed.' }
+          }
+          gh release upload $release.tag $env:RELEASE_ARCHIVE --clobber
+          if ($LASTEXITCODE -ne 0) { throw 'Release ZIP upload failed; draft remains unpublished.' }
+          gh release edit $release.tag --draft=false --latest
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed.' }
+          gh release view $release.tag --json url,isDraft,tagName,assets
+          if ($LASTEXITCODE -ne 0) { throw 'Published release verification failed.' }
