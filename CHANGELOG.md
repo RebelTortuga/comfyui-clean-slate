@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 — Trust and documentation refresh
+
+- Add the current connected-controller and workflow screenshots to the release package.
+- Update the README and release metadata to match the downloadable package.
+- Retain `SAFETY.md`, `SECURITY.md`, and the MIT license in the package.
+- No Python node or browser-extension logic changed from 0.2.0.
+
+Validation: Python compilation, JavaScript syntax, example-workflow JSON, and `pyproject.toml` parsing passed. The prior author-confirmed behavior remains documented; no new clean-machine or GPU runtime test was performed.
+
 ## 0.2.0 — Connected clearing and workflow controls
 
 Consolidated changes since the published v0.1.0 release; local test-build numbers are not separate public releases.

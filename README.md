@@ -11,7 +11,7 @@
 
 Clear connected images and prompts while keeping workflow connections, saved files and prompt history intact.
 
-**Release: v0.2.0** · **License: MIT** · **Free local extension**
+**Release: v0.2.1** · **License: MIT** · **Free local extension**
 
 ## Preview
 
